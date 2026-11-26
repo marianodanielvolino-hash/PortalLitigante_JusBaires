@@ -6,7 +6,8 @@ const code = readFileSync(new URL('../flowise/orientacion.js', import.meta.url),
 const answer = new Function('input', 'cards', code + '\nreturn answer(input, cards);');
 const cards = [
   { area: 'REG', title: 'Alta de prueba', triggers: ['crear cuenta'], answer: 'Usá el formulario oficial.', resource: 'portal' },
-  { area: 'SOP', title: 'Error de prueba', triggers: ['crear cuenta', 'no veo la causa'], answer: 'Revisá la pantalla.', resource: 'publicSearch' }
+  { area: 'SOP', title: 'Error de prueba', triggers: ['crear cuenta', 'no veo la causa'], answer: 'Revisá la pantalla.', resource: 'publicSearch' },
+  { id: 'VEC-PL-ESC-03', area: 'ESC', title: 'Inicio de demanda y sorteo', triggers: ['sorteo de demanda'], answer: 'Orientación para el inicio.', resource: 'portal' }
 ];
 
 test('menú y navegación', () => {
@@ -26,4 +27,17 @@ test('contacto, urgencia y privacidad', () => {
 test('derivación y límite de jurisdicción', () => {
   assert.match(answer('Fuero nacional', cards), /organismo que interviene/);
   assert.match(answer('Una pregunta ajena al tema', cards), /No encontré/);
+});
+test('inicio de causa y variantes ciudadanas recuperan la ficha existente', () => {
+  for (const query of ['Inicio de una causa', '¿Cómo puedo iniciar una causa?', 'Necesito abrir una causa', 'Quiero presentar una demanda']) {
+    assert.match(answer(query, cards), /^\*\*Inicio de demanda y sorteo\*\*/);
+    assert.match(answer(query, cards), /https:\/\/eje\.juscaba\.gob\.ar\/iol-ui\/p\/inicio/);
+  }
+  assert.match(answer('No veo la causa', cards), /^\*\*Error de prueba\*\*/);
+  assert.match(answer('Quiero abrir una causa en el fuero federal', cards), /organismo que interviene/);
+});
+test('cada título que muestra el menú se puede escribir como consulta', () => {
+  for (const card of cards) {
+    assert.ok(answer(card.title, cards).startsWith('**' + card.title + '**'));
+  }
 });
