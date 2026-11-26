@@ -56,3 +56,28 @@ test('aclara una consulta ambigua y ofrece contacto si faltan fichas', () => {
   assert.match(guard({ input: 'expediente' }), /iniciar una causa nueva o buscar una que ya existe/);
   assert.match(answer({ input: '3.1' }, '[]'), /no pude consultar.*[\s\S]*4008-0216/);
 });
+
+test('responde a incidentes cotidianos antes de consultar la base', () => {
+  const groups = [
+    [/Sin conexión a internet/, 'No tengo internet, que hago ?', 'Se me cortó el wifi', 'Estoy sin conexión'],
+    [/Corte de luz en el estudio/, 'No puedo entra xq no tengo luz en mi estudio ?', 'Se fue la luz', 'Se cortó la electricidad en la oficina'],
+    [/No puedo abrir el Portal/, 'Está caído el portal', 'El portal está caído?', 'No puedo ingresar al Portal', 'El Portal queda en blanco'],
+    [/Se cerró la sesión/, 'Me deslogueó', 'Se me venció la sesión'],
+    [/Cómo verificar si se envió/, 'No sé si se envió', 'Mandé dos veces el escrito', 'No tengo constancia', 'Se tildó al enviar'],
+    [/Se interrumpió la firma/, 'La firma quedó a medias', 'Se cerró el firmador'],
+    [/Usar el Portal desde otro dispositivo/, '¿Puedo entrar desde el celu?', 'No tengo computadora']
+  ];
+  for (const [expected, ...cases] of groups) {
+    for (const input of cases) {
+      const result = guard({ input });
+      assert.match(result, expected, input);
+      assert.match(result, /https:\/\/eje\.juscaba\.gob\.ar\/iol-ui\/p\/inicio/);
+      assert.match(result, /contacto/);
+    }
+  }
+  assert.match(guard({ input: 'No tengo internet y me vence el plazo hoy' }), /contactá de inmediato/);
+  assert.match(guard({ input: 'Se cortó la luz y tengo que presentar el escrito hoy' }), /contactá de inmediato/);
+  assert.match(guard({ input: 'No tengo internet, mi contraseña es ficticia' }), /evitá compartir contraseñas/);
+  assert.match(guard({ input: 'No puedo ingresar porque olvidé la contraseña' }), /^Consulta documental:/);
+  assert.match(guard({ input: '¿Cómo firmo una presentación desde el celular?' }), /^Consulta documental:/);
+});
