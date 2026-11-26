@@ -21,6 +21,12 @@ El flujo entrega texto utilizable con selección por número. La futura integrac
 
 [Documentación de mensajes interactivos de Meta](https://developers.facebook.com/docs/whatsapp/guides/interactive-messages/?locale=es_ES)
 
+## Ayuda técnica cotidiana
+
+Los cortes de internet o luz, el Portal que no abre, la sesión interrumpida, las dudas sobre el envío, la firma interrumpida y el uso de otro dispositivo tienen respuestas directas. El agente indica qué probar y sugiere verificar la presentación o la constancia antes de repetir un envío. Las variantes sobre PDF y ventanas emergentes apuntan a las fichas de soporte del Document Store.
+
+Los filtros de privacidad y las urgencias conservan prioridad. La actualización se probó en el flujo original con 14 casos, incluidas las dos consultas de conectividad y luz reportadas, una urgencia, un caso de privacidad y un recorrido documental.
+
 ## Configuración y mantenimiento
 
 1. Para actualizar una ficha en Flowise, editá el cargador **28 fichas del Portal del Litigante**. Conservá el encabezado, el ID `VEC-PL-…`, los rótulos `Consultas relacionadas:`, `Respuesta:` y `Fuente oficial:`, y el delimitador `<<<FIN-DE-FICHA>>>` entre fichas.
