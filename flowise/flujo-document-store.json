@@ -185,16 +185,10 @@
             "name": "startAgentflow"
           }
         ],
-        "outputs": {},
-        "selected": false
+        "outputs": {}
       },
       "width": 103,
-      "height": 66,
-      "positionAbsolute": {
-        "x": 0,
-        "y": 60
-      },
-      "selected": false
+      "height": 66
     },
     {
       "id": "customFunctionAgentflow_0",
@@ -267,7 +261,7 @@
         "inputAnchors": [],
         "inputs": {
           "customFunctionInputVariables": [],
-          "customFunctionJavascriptFunction": "const normalize = (value) => String(value ?? '').normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n\nconst office = '[Oficina de Defensa del Litigante](https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/)';\nconst contact = 'Podés comunicarte con la ' + office + ' al (011) 4008-0216 / 0272 o por correo a odl@jusbaires.gob.ar.';\nconst navigation = '\\n\\nEscribí **menú** para ver las opciones.';\nconst areas = [\n  ['REG', 'Registro y acceso'], ['FD', 'Firma digital'], ['ESC', 'Escritos judiciales'],\n  ['CED', 'Cédulas y notificaciones'], ['CON', 'Consultas y servicios'], ['SOP', 'Soporte técnico']\n];\nconst examples = {\n  REG: ['Crear una cuenta', 'Validación de identidad', 'Recuperar el acceso'],\n  FD: ['Configurar firma digital remota', 'Firmar con token', 'Verificar la firma de un PDF'],\n  ESC: ['Inicio de una causa', 'Presentar un escrito y adjuntos', 'Primera presentación'],\n  CED: ['Cédula electrónica', 'Cédula a domicilio físico', 'Cédula observada'],\n  CON: ['Buscar una causa pública', 'Consultar la agenda judicial', 'Consultar zonas de notificación'],\n  SOP: ['Ventanas emergentes', 'Problemas al adjuntar un PDF', 'Causa que no figura en Mis Causas']\n};\nfunction route(message) {\n  const input = String(message ?? '');\n  if (input.length > 3000) {\n    return 'Resumí tu consulta sin incluir datos personales ni copiar el contenido de documentos judiciales.' + navigation;\n  }\n  const q = normalize(input);\n  if (/\\b(?:venc\\w* hoy|plazo (?:perentorio|judicial|vence)|in extremis|habilitacion urgente|alta urgente|caducidad|prescripcion)\\b/.test(q)) {\n    return 'Si hay un posible vencimiento judicial, contactá de inmediato a tu profesional o a la dependencia que interviene para confirmar cómo proceder. Para asistencia con el Portal, ' + contact + ' El chat no confirma plazos ni registra presentaciones.';\n  }\n  if (/[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}|\\b\\d{7,11}\\b|\\b\\d{2}-\\d{8}-\\d\\b/i.test(input) || /\\b(?:mi|el|la) (?:clave|otp|pin|contrasena|password|dni|cuit|cuil|codigo) (?:es|son)\\b/.test(q) || /\\b(?:mi )?(?:clave|otp|pin|contrase[nñ]a|password|dni|cuit|cuil)\\s*:/i.test(input)) {\n    return 'Para cuidar tu información, evitá compartir contraseñas, códigos o identificadores personales por este chat. Contame qué trámite querés hacer sin incluir esos datos.' + navigation;\n  }\n  if (/\\b(?:humano|operador|hablar con alguien|atencion personal|mi ticket|estado del ticket|abrir ticket|generar ticket)\\b/.test(q)) return contact + ' Este chat brinda orientación técnica.';\n  if (/\\b(?:me conviene|que estrategia|que recurso (?:debo|puedo)|calcul\\w+.*plazo|cuando vence|asesoramiento legal|que debo alegar)\\b/.test(q)) {\n    return 'Puedo orientarte en el uso del Portal. Para una decisión sobre tu caso o un plazo, consultá con tu profesional o con la dependencia que interviene.' + navigation;\n  }\n  if (/\\b(?:fuero nacional|fuero federal|lex100|scba|provincia de buenos aires|tribunal electoral|padron electoral)\\b/.test(q)) {\n    return 'Este chat orienta sobre el Portal del Litigante del Poder Judicial de la Ciudad de Buenos Aires. Para esa consulta, usá el canal del organismo que interviene.' + navigation;\n  }\n  if (!q || /^(?:hola|buen dia|buenas|menu|menu principal|inicio|volver|atras|ayuda)$/.test(q)) {\n    return '¡Hola! Soy el asistente de orientación para el Portal del Litigante. Elegí un número o contame tu consulta.\\n\\n' +\n      areas.map(([, name], index) => (index + 1) + '. ' + name).join('\\n');\n  }\n  const selected = q.match(/^(?:opcion )?([1-6])$/);\n  const area = selected ? areas[Number(selected[1]) - 1] : areas.find(([, name]) => normalize(name) === q);\n  if (area) {\n    return '**' + area[1] + '**\\n\\n¿Sobre qué tema necesitás orientación?\\n\\n' +\n      examples[area[0]].map((title) => '- ' + title).join('\\n') + navigation;\n  }\n  return 'BUSCARFICHA';\n}\n\nreturn route($flow.input);\n",
+          "customFunctionJavascriptFunction": "const normalize = (value) => String(value ?? '').normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n\nconst office = '[Oficina de Defensa del Litigante](https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/)';\nconst contact = 'Podés comunicarte con la ' + office + ' al (011) 4008-0216 / 0272 o por correo a odl@jusbaires.gob.ar.';\nconst navigation = '\\n\\n0 · Menú principal';\nconst areas = [\n  ['REG', 'Registro y acceso'], ['FD', 'Firma digital'], ['ESC', 'Escritos judiciales'],\n  ['CED', 'Cédulas y notificaciones'], ['CON', 'Consultas y servicios'], ['SOP', 'Soporte técnico']\n];\nconst topics = [\n  ['Crear una cuenta', 'Agregar una profesión o rol', 'Validación de identidad', 'Verificar el alta de la cuenta', 'Habilitación urgente', 'Recuperar el acceso'],\n  ['Configurar firma digital remota', 'Firmar una presentación en forma remota', 'Token y controladores', 'Firmar con token', 'Documentos con más de una firma', 'Verificar la firma de un PDF'],\n  ['Inicio de una causa', 'Presentar un escrito y adjuntos', 'Primera presentación y domicilio electrónico', 'Adjuntar el bono CPACF', 'Escritos privados y reserva'],\n  ['Cédula a domicilio físico', 'Cédula electrónica', 'Cédula observada', 'Dejar nota en el Portal'],\n  ['Buscar una causa pública', 'Consultar la agenda judicial', 'Consultar zonas de notificación'],\n  ['Ventanas emergentes', 'Problemas al adjuntar un PDF', 'Canales de atención de la ODL', 'Causa que no figura en Mis Causas']\n];\n\nconst catalog = (area) => {\n  const title = areas[area - 1][1];\n  const rows = topics[area - 1].map((topic, i) => area + '.' + (i + 1) + ' ' + topic);\n  return '**' + title + '**\\n\\n' + rows.join('  \\n') + '\\n\\nRespondé con el código o contame tu consulta.\\n0 · Menú principal';\n};\n\nconst mainMenu = '**Portal del Litigante · Justicia de la Ciudad**\\n\\n' +\n  areas.map(([, name], i) => (i + 1) + '. ' + name).join('\\n') +\n  '\\n\\nRespondé con un número o escribí tu consulta. Para atención humana, escribí **contacto**.';\n\nfunction route(message) {\n  const input = String(message ?? '');\n  if (input.length > 3000) {\n    return 'Resumí tu consulta sin incluir datos personales ni copiar el contenido de documentos judiciales.' + navigation;\n  }\n  const q = normalize(input);\n  if (/\\b(?:venc\\w* hoy|plazo (?:perentorio|judicial|vence)|in extremis|habilitacion urgente|alta urgente|caducidad|prescripcion)\\b/.test(q)) {\n    return 'Si hay un posible vencimiento judicial, contactá de inmediato a tu profesional o a la dependencia que interviene para confirmar cómo proceder. Para asistencia con el Portal, ' + contact + ' El chat no confirma plazos ni registra presentaciones.';\n  }\n  if (/[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}|\\b\\d{7,11}\\b|\\b\\d{2}-\\d{8}-\\d\\b/i.test(input) || /\\b(?:mi|el|la) (?:clave|otp|pin|contrasena|password|dni|cuit|cuil|codigo) (?:es|son)\\b/.test(q) || /\\b(?:mi )?(?:clave|otp|pin|contrase[nñ]a|password|dni|cuit|cuil)\\s*:/i.test(input)) {\n    return 'Para cuidar tu información, evitá compartir contraseñas, códigos o identificadores personales por este chat. Contame qué trámite querés hacer sin incluir esos datos.' + navigation;\n  }\n  if (/\\b(?:humano|operador|hablar con alguien|atencion personal|mi ticket|estado del ticket|abrir ticket|generar ticket)\\b/.test(q)) return contact + navigation;\n  if (/\\b(?:me conviene|que estrategia|que recurso (?:debo|puedo)|calcul\\w+.*plazo|cuando vence|asesoramiento legal|que debo alegar)\\b/.test(q)) {\n    return 'Puedo orientarte en el uso del Portal. Para una decisión sobre tu caso o un plazo, consultá con tu profesional o con la dependencia que interviene.' + navigation;\n  }\n  if (/\\b(?:fuero nacional|fuero federal|lex100|scba|provincia de buenos aires|tribunal electoral|padron electoral)\\b/.test(q)) {\n    return 'Este chat orienta sobre el Portal del Litigante del Poder Judicial de la Ciudad de Buenos Aires. Para esa consulta, usá el canal del organismo que interviene.' + navigation;\n  }\n  if (!q || /^(?:0|hola|hola buen dia|buen dia|buenas|buenas tardes|buenas noches|menu|menu principal|inicio|volver|atras|ayuda)$/.test(q)) {\n    return mainMenu;\n  }\n  if (/^(?:gracias|muchas gracias|listo gracias|salir|finalizar|terminar|chau|hasta luego)$/.test(q)) {\n    return 'Gracias por consultar. Si necesitás más ayuda, escribí **menú**.';\n  }\n  if (/^(?:contacto|atencion humana|quiero hablar con una persona)$/.test(q)) {\n    return contact + navigation;\n  }\n  const option = q.match(/^(?:opcion )?([0-9])(?: ([0-9]{1,2}))?$/);\n  if (option) {\n    const area = Number(option[1]);\n    const position = Number(option[2] || 0);\n    if (!topics[area - 1]) return 'Elegí una opción del 1 al 6.\\n\\n' + mainMenu;\n    if (!option[2]) return catalog(area);\n    const title = topics[area - 1][position - 1];\n    if (!title) return 'Ese código no figura en este menú.\\n\\n' + catalog(area);\n    if (area === 1 && position === 5) return route(title);\n    return 'Consulta documental: ' + title;\n  }\n  const named = areas.findIndex(([, name]) => normalize(name) === q);\n  if (named >= 0) return catalog(named + 1);\n  return 'Consulta documental: ' + input.trim();\n}\n\nreturn route($flow.input);\n",
           "customFunctionUpdateState": []
         },
         "outputAnchors": [
@@ -277,20 +271,14 @@
             "name": "customFunctionAgentflow"
           }
         ],
-        "outputs": {},
-        "selected": false
+        "outputs": {}
       },
       "position": {
         "x": 280,
         "y": 60
       },
-      "width": 251,
-      "height": 66,
-      "positionAbsolute": {
-        "x": 280,
-        "y": 60
-      },
-      "selected": false
+      "width": 265,
+      "height": 66
     },
     {
       "id": "conditionAgentflow_0",
@@ -300,17 +288,18 @@
         "y": 60
       },
       "data": {
-        "id": "conditionAgentflow_0",
         "label": "¿Consultar fichas?",
-        "version": 1,
         "name": "conditionAgentflow",
+        "version": 1,
         "type": "Condition",
-        "color": "#FFB938",
+        "category": "Agent Flows",
+        "description": "Split flows based on If Else conditions",
         "baseClasses": [
           "Condition"
         ],
-        "category": "Agent Flows",
-        "description": "Split flows based on If Else conditions",
+        "color": "#FFB938",
+        "outputs": {},
+        "id": "conditionAgentflow_0",
         "inputParams": [
           {
             "label": "Conditions",
@@ -540,8 +529,8 @@
             {
               "type": "string",
               "value1": "{{ customFunctionAgentflow_0.output.content }}",
-              "operation": "equal",
-              "value2": "BUSCARFICHA"
+              "operation": "startsWith",
+              "value2": "Consulta documental:"
             }
           ]
         },
@@ -558,17 +547,10 @@
             "description": "Respuesta directa",
             "id": "conditionAgentflow_0-output-1"
           }
-        ],
-        "outputs": {},
-        "selected": false
+        ]
       },
-      "width": 193,
-      "height": 80,
-      "positionAbsolute": {
-        "x": 580,
-        "y": 60
-      },
-      "selected": false
+      "width": 235,
+      "height": 66
     },
     {
       "id": "retrieverAgentflow_0",
@@ -578,17 +560,17 @@
         "y": 0
       },
       "data": {
-        "id": "retrieverAgentflow_0",
         "label": "Buscar en la base del Portal",
-        "version": 1,
         "name": "retrieverAgentflow",
+        "version": 1,
         "type": "Retriever",
-        "color": "#b8bedd",
+        "category": "Agent Flows",
+        "description": "Retrieve information from vector database",
         "baseClasses": [
           "Retriever"
         ],
-        "category": "Agent Flows",
-        "description": "Retrieve information from vector database",
+        "color": "#b8bedd",
+        "id": "retrieverAgentflow_0",
         "inputParams": [
           {
             "label": "Knowledge (Document Stores)",
@@ -664,27 +646,21 @@
         "inputAnchors": [],
         "inputs": {
           "retrieverKnowledgeDocumentStores": [],
-          "retrieverQuery": "{{ question }}",
+          "retrieverQuery": "{{ customFunctionAgentflow_0.output.content }}",
           "outputFormat": "textWithMetadata",
           "retrieverUpdateState": []
         },
+        "outputs": {},
         "outputAnchors": [
           {
             "name": "retrieverAgentflow",
             "label": "Buscar en la base del Portal",
             "id": "retrieverAgentflow_0-output-retrieverAgentflow"
           }
-        ],
-        "outputs": {},
-        "selected": false
+        ]
       },
-      "width": 252,
-      "height": 66,
-      "positionAbsolute": {
-        "x": 900,
-        "y": 0
-      },
-      "selected": false
+      "width": 235,
+      "height": 66
     },
     {
       "id": "directReplyAgentflow_0",
@@ -694,18 +670,18 @@
         "y": 190
       },
       "data": {
-        "id": "directReplyAgentflow_0",
         "label": "Responder sin búsqueda",
-        "version": 1,
         "name": "directReplyAgentflow",
+        "version": 1,
         "type": "DirectReply",
-        "color": "#4DDBBB",
-        "hideOutput": true,
+        "category": "Agent Flows",
+        "description": "Directly reply to the user with a message",
         "baseClasses": [
           "DirectReply"
         ],
-        "category": "Agent Flows",
-        "description": "Directly reply to the user with a message",
+        "color": "#4DDBBB",
+        "hideOutput": true,
+        "id": "directReplyAgentflow_0",
         "inputParams": [
           {
             "label": "Message",
@@ -721,17 +697,11 @@
         "inputs": {
           "directReplyMessage": "{{ customFunctionAgentflow_0.output.content }}"
         },
-        "outputAnchors": [],
         "outputs": {},
-        "selected": false
+        "outputAnchors": []
       },
-      "width": 233,
-      "height": 66,
-      "positionAbsolute": {
-        "x": 900,
-        "y": 190
-      },
-      "selected": false
+      "width": 235,
+      "height": 66
     },
     {
       "id": "customFunctionAgentflow_1",
@@ -809,7 +779,7 @@
               "variableValue": "{{ retrieverAgentflow_0.output.content }}"
             }
           ],
-          "customFunctionJavascriptFunction": "const normalize = (value) => String(value ?? '').normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n\nconst sourceLabels = new Map([\n  ['https://eje.juscaba.gob.ar/iol-ui/p/inicio', 'Portal del Litigante'],\n  ['https://eje.juscaba.gob.ar/iol-ui/', 'Consulta Pública de EJE'],\n  ['https://firmar.gob.ar/firmador/', 'Firma Digital Remota'],\n  ['https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/', 'Oficina de Defensa del Litigante']\n]);\nconst navigation = '\\n\\nEscribí **menú** para ver las opciones.';\nconst fallback = 'No encontré una ficha suficientemente relacionada. Contame qué querés hacer en el Portal o en qué paso te trabaste. Para asistencia técnica, podés consultar a la [Oficina de Defensa del Litigante](https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/).' + navigation;\n\nfunction respond(question, retrieved) {\n  let documents;\n  try {\n    documents = Array.isArray(retrieved) ? retrieved : JSON.parse(retrieved);\n  } catch {\n    return fallback;\n  }\n  if (!Array.isArray(documents)) return fallback;\n  const query = normalize(question);\n  const queryWords = ' ' + query + ' ';\n  const matches = [];\n  for (const {pageContent} of documents) {\n    const ficha = String(pageContent ?? '').match(\n      /^# ([^\\n]+)\\s+Ficha (VEC-PL-[A-Z]+-\\d+)\\s+Consultas relacionadas: ([^\\n]+)\\s+Respuesta:\\s+([\\s\\S]+?)\\s+Fuente oficial: (https:\\/\\/[^\\s]+)\\s*$/\n    );\n    if (!ficha) continue;\n    const [, title, id, triggers, answer, source] = ficha;\n    if (!sourceLabels.has(source)) continue;\n    const phrases = [title, ...triggers.split(',')].map(normalize).filter(Boolean);\n    const score = normalize(title) === query ? Number.MAX_SAFE_INTEGER :\n      Math.max(0, ...phrases.filter(phrase => queryWords.includes(' ' + phrase + ' ')).map(phrase => phrase.split(' ').length));\n    if (score > 0) matches.push({title, id, answer, source, score});\n  }\n  matches.sort((a, b) => b.score - a.score);\n  const [first, second] = matches;\n  if (!first) return fallback;\n  if (second && first.id !== second.id && first.score === second.score) {\n    return '¿Te referís a **' + first.title + '** o a **' + second.title + '**?' + navigation;\n  }\n  return '**' + first.title + '**\\n\\n' + first.answer + '\\n\\n[' + sourceLabels.get(first.source) + '](' + first.source + ')' + navigation;\n}\n\nreturn respond($flow.input, $retrieved);\n",
+          "customFunctionJavascriptFunction": "const normalize = (value) => String(value ?? '').normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n\nconst sourceLabels = new Map([\n  ['https://eje.juscaba.gob.ar/iol-ui/p/inicio', 'Portal del Litigante'],\n  ['https://eje.juscaba.gob.ar/iol-ui/', 'Consulta Pública de EJE'],\n  ['https://firmar.gob.ar/firmador/', 'Firma Digital Remota'],\n  ['https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/', 'Oficina de Defensa del Litigante']\n]);\nconst navigation = '\\n\\n0 · Menú principal';\nconst areas = ['REG', 'FD', 'ESC', 'CED', 'CON', 'SOP'];\n\nconst fallback = '¿Qué querés hacer en el Portal? Por ejemplo, «iniciar una causa» o «recuperar mi acceso».\\n\\nPara atención humana, escribí **contacto**.' + navigation;\n\nfunction respond(question, retrieved) {\n  let documents;\n  try {\n    documents = Array.isArray(retrieved) ? retrieved : JSON.parse(retrieved);\n  } catch {\n    return fallback;\n  }\n  if (!Array.isArray(documents)) return fallback;\n  const query = normalize(question);\n  const queryWords = ' ' + query + ' ';\n  const selected = query.match(/^(?:opcion )?([1-6]) ([1-6])$/);\n  const areaIndex = selected ? Number(selected[1]) - 1 : -1;\n  const item = selected ? Number(selected[2]) : 0;\n  const filingOrder = [3, 1, 2, 4, 5];\n  const documentNumber = areaIndex === 2 ? filingOrder[item - 1] : item;\n  const selectedId = documentNumber ? 'VEC-PL-' + areas[areaIndex] + '-0' + documentNumber : null;\n  const matches = [];\n  for (const document of documents) {\n    const ficha = String(document?.pageContent ?? '').match(\n      /^# ([^\\n]+)\\s+Ficha (VEC-PL-[A-Z]+-\\d+)\\s+Consultas relacionadas: ([^\\n]+)\\s+Respuesta:\\s+([\\s\\S]+?)\\s+Fuente oficial: (https:\\/\\/[^\\s]+)\\s*$/\n    );\n    if (!ficha) continue;\n    const [, title, id, triggers, answer, source] = ficha;\n    if (!sourceLabels.has(source) || (selectedId && selectedId !== id)) continue;\n    const phrases = [title, ...triggers.split(',')].map(normalize).filter(Boolean);\n    const score = selectedId || normalize(title) === query ? Number.MAX_SAFE_INTEGER :\n      Math.max(0, ...phrases.filter(phrase => queryWords.includes(' ' + phrase + ' ')).map(phrase => phrase.split(' ').length));\n    if (score > 0) matches.push({title, id, answer, source, score});\n  }\n  matches.sort((a, b) => b.score - a.score);\n  const [first, second] = matches;\n  if (!first) return fallback;\n  if (second && first.id !== second.id && first.score === second.score) {\n    return '¿Te referís a **' + first.title + '** o a **' + second.title + '**?' + navigation;\n  }\n  const area = areas.indexOf(first.id.split('-')[2]);\n  const back = area >= 0 ? (area + 1) + ' · Volver  |  0 · Menú principal' : '0 · Menú principal';\n  return '**' + first.title + '**\\n\\n' + first.answer + '\\n\\n[' + sourceLabels.get(first.source) + '](' + first.source + ')\\n\\n' + back;\n}\n\nreturn respond($flow.input, $retrieved);\n",
           "customFunctionUpdateState": []
         },
         "outputAnchors": [
@@ -819,20 +789,14 @@
             "name": "customFunctionAgentflow"
           }
         ],
-        "outputs": {},
-        "selected": false
+        "outputs": {}
       },
       "position": {
         "x": 1220,
         "y": 0
       },
-      "width": 306,
-      "height": 66,
-      "positionAbsolute": {
-        "x": 1220,
-        "y": 0
-      },
-      "selected": false
+      "width": 265,
+      "height": 66
     }
   ],
   "edges": [
