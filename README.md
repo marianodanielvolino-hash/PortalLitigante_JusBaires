@@ -4,7 +4,7 @@ Asistente de orientación técnica para el Portal del Litigante de la Ciudad Aut
 
 ## Funcionamiento
 
-El flujo activo consulta `KB_PORTAL_LITIGANTE_JUSBAIRES` por medio de un nodo Retriever. El Document Store contiene las 28 fichas con el identificador, las expresiones relacionadas, la respuesta revisada y la URL oficial. El índice usa OpenAI `text-embedding-3-small` y Faiss, con cinco resultados por consulta. El menú, la privacidad, las urgencias y la derivación se resuelven antes del Retriever. La respuesta muestra la ficha compatible con la consulta y su enlace oficial.
+El flujo activo consulta `KB_PORTAL_LITIGANTE_JUSBAIRES` por medio de un nodo Retriever. El Document Store contiene las 28 fichas con el identificador, las expresiones relacionadas, la respuesta revisada y la URL oficial. El índice usa OpenAI `text-embedding-3-small` y Faiss, con cinco resultados por consulta. El menú, la privacidad, las urgencias y la derivación se resuelven antes del Retriever. La respuesta muestra la ficha compatible con la consulta y su enlace oficial. Las variantes conocidas apuntan a una ficha por ID y las demás pasan por recuperación semántica con comprobación de coincidencia. Las consultas ambiguas reciben una pregunta concreta y, si faltan resultados, se ofrece el teléfono y el correo oficiales de la ODL.
 
 ## Navegación para chat móvil
 
@@ -12,6 +12,8 @@ El flujo activo consulta `KB_PORTAL_LITIGANTE_JUSBAIRES` por medio de un nodo Re
 - El pie de cada ficha indica el número del área para volver y `0` para abrir el menú principal. También se entienden `menú`, `volver`, `contacto` y `finalizar`.
 - Los códigos son estables y se pueden usar desde una conversación nueva. El asistente no pide que se copie el título de la ficha ni depende de recordar el último menú.
 - Se validaron los 28 códigos y 14 comprobaciones adicionales en el chat interno de Flowise. La opción `1.5` se deriva directamente por urgencia.
+
+El chat de Flowise tiene tres accesos iniciales configurados en el panel del agente: **Menú**, **Iniciar una causa** y **Contacto**.
 
 ### Futuro canal WhatsApp
 
@@ -26,6 +28,8 @@ El flujo entrega texto utilizable con selección por número. La futura integrac
 3. Para restaurar el flujo en otra instancia, importá [flujo-document-store.json](flowise/flujo-document-store.json), seleccioná el Document Store de esa instancia en **Buscar en la base del Portal**, guardá y probá el flujo. El export es portátil y se distribuye con el selector de base vacío.
 
 ## Pruebas y reversión
+
+Validación del 26 de noviembre de 2026 en el Agentflow original: 84 de 84 consultas naturales, 7 de 7 comprobaciones adicionales y 11 de 11 pruebas automatizadas. Las 84 entradas son variantes configuradas, tres por tema. El conjunto adicional cubrió una variante libre ajena al conjunto, ambigüedad, contacto, privacidad, menú, cierre y consulta fuera de alcance. El aviso de contingencia se verifica con resultados vacíos. Una excepción del nodo nativo Retriever antes de devolver resultados sigue bajo el manejo de errores de Flowise.
 
 En el chat interno se validaron los 28 temas y 16 casos adicionales de navegación, variantes de consulta, privacidad y derivación. El tema de habilitación urgente tomó la ruta de atención directa. La consulta «Inicio de una causa» recuperó `VEC-PL-ESC-03` como primer resultado.
 
