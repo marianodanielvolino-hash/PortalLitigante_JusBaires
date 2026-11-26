@@ -6,6 +6,19 @@ Asistente de orientación técnica para el Portal del Litigante de la Ciudad Aut
 
 El flujo activo consulta `KB_PORTAL_LITIGANTE_JUSBAIRES` por medio de un nodo Retriever. El Document Store contiene las 28 fichas con el identificador, las expresiones relacionadas, la respuesta revisada y la URL oficial. El índice usa OpenAI `text-embedding-3-small` y Faiss, con cinco resultados por consulta. El menú, la privacidad, las urgencias y la derivación se resuelven antes del Retriever. La respuesta muestra la ficha compatible con la consulta y su enlace oficial.
 
+## Navegación para chat móvil
+
+- Menú principal `1`–`6`, subopciones con códigos completos y consultas en lenguaje natural. Ejemplo `3` → `3.1` abre la ficha **Inicio de una causa**.
+- El pie de cada ficha indica el número del área para volver y `0` para abrir el menú principal. También se entienden `menú`, `volver`, `contacto` y `finalizar`.
+- Los códigos son estables y se pueden usar desde una conversación nueva. El asistente no pide que se copie el título de la ficha ni depende de recordar el último menú.
+- Se validaron los 28 códigos y 14 comprobaciones adicionales en el chat interno de Flowise. La opción `1.5` se deriva directamente por urgencia.
+
+### Futuro canal WhatsApp
+
+El flujo entrega texto utilizable con selección por número. La futura integración puede convertir el menú principal y los submenús en listas de WhatsApp, usando los mismos códigos como identificadores de las filas. Los botones de respuesta se pueden reservar para acciones breves, como volver o ir al menú. El transporte debe enviar solo la respuesta final al ciudadano, sin la traza técnica de Flowise. Para los mensajes de texto, debe convertir las negritas y enlaces al formato de WhatsApp.
+
+[Documentación de mensajes interactivos de Meta](https://developers.facebook.com/docs/whatsapp/guides/interactive-messages/?locale=es_ES)
+
 ## Configuración y mantenimiento
 
 1. Para actualizar una ficha en Flowise, editá el cargador **28 fichas del Portal del Litigante**. Conservá el encabezado, el ID `VEC-PL-…`, los rótulos `Consultas relacionadas:`, `Respuesta:` y `Fuente oficial:`, y el delimitador `<<<FIN-DE-FICHA>>>` entre fichas.
