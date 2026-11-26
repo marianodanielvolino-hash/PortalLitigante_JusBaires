@@ -11,6 +11,14 @@ const areas = [
   ['REG', 'Registro y acceso'], ['FD', 'Firma digital'], ['ESC', 'Escritos judiciales'],
   ['CED', 'Cédulas y notificaciones'], ['CON', 'Consultas y servicios'], ['SOP', 'Soporte técnico']
 ];
+const topicAliases = {
+  'VEC-PL-ESC-03': [
+    'inicio de una causa', 'inicio de causa', 'iniciar una causa', 'iniciar causa',
+    'abrir una causa', 'abrir causa', 'nueva causa', 'causa nueva',
+    'inicio de una demanda', 'inicio de demanda', 'iniciar una demanda', 'iniciar demanda',
+    'presentar una demanda', 'presentar demanda', 'cargar una demanda', 'sorteo de causa'
+  ]
+};
 
 function answer(message, cards) {
   const input = String(message ?? '').slice(0, 3000);
@@ -39,14 +47,22 @@ function answer(message, cards) {
       cards.filter((card) => card.area === area[0]).map((card) => '- ' + card.title).join('\n') + navigation;
   }
   const words = ' ' + q + ' ';
-  const hits = cards.map((card) => ({
-    card,
-    score: Math.max(0, ...card.triggers.map(normalize).filter((t) => t && words.includes(' ' + t + ' '))
-      .map((t) => t.split(' ').length))
-  })).filter((hit) => hit.score > 0).sort((a, b) => b.score - a.score);
+  const hits = cards.map((card) => {
+    const phrases = [card.title, ...card.triggers, ...(topicAliases[card.id] ?? [])];
+    return {
+      card,
+      score: Math.max(0, ...phrases.map(normalize).filter((phrase) => phrase && words.includes(' ' + phrase + ' '))
+        .map((phrase) => phrase.split(' ').length))
+    };
+  }).filter((hit) => hit.score > 0).sort((a, b) => b.score - a.score);
+  const exactTitle = hits.find(({ card }) => normalize(card.title) === q);
+  if (exactTitle) return renderCard(exactTitle.card);
   if (!hits.length) return 'No encontré una guía concreta para esa consulta. Decime qué estabas intentando hacer en el Portal y en qué pantalla te trabaste. ' + contact + navigation;
   if (hits[1]?.score === hits[0].score) return '¿Tu consulta es sobre **' + hits[0].card.title + '** o sobre **' + hits[1].card.title + '**?' + navigation;
-  const card = hits[0].card;
+  return renderCard(hits[0].card);
+}
+
+function renderCard(card) {
   const links = { portal, publicSearch, sign, office, contact };
   return '**' + card.title + '**\n\n' + card.answer + '\n\n' + links[card.resource] + navigation;
 }
