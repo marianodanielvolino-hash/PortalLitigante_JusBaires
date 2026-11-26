@@ -1,0 +1,905 @@
+{
+  "nodes": [
+    {
+      "id": "startAgentflow_0",
+      "type": "agentFlow",
+      "position": {
+        "x": 0,
+        "y": 60
+      },
+      "data": {
+        "id": "startAgentflow_0",
+        "label": "Start",
+        "version": 1.1,
+        "name": "startAgentflow",
+        "type": "Start",
+        "color": "#7EE787",
+        "hideInput": true,
+        "baseClasses": [
+          "Start"
+        ],
+        "category": "Agent Flows",
+        "description": "Starting point of the agentflow",
+        "inputParams": [
+          {
+            "label": "Input Type",
+            "name": "startInputType",
+            "type": "options",
+            "options": [
+              {
+                "label": "Chat Input",
+                "name": "chatInput",
+                "description": "Start the conversation with chat input"
+              },
+              {
+                "label": "Form Input",
+                "name": "formInput",
+                "description": "Start the workflow with form inputs"
+              }
+            ],
+            "default": "chatInput",
+            "id": "startAgentflow_0-input-startInputType-options",
+            "display": true
+          },
+          {
+            "label": "Form Title",
+            "name": "formTitle",
+            "type": "string",
+            "placeholder": "Please Fill Out The Form",
+            "show": {
+              "startInputType": "formInput"
+            },
+            "id": "startAgentflow_0-input-formTitle-string",
+            "display": false
+          },
+          {
+            "label": "Form Description",
+            "name": "formDescription",
+            "type": "string",
+            "placeholder": "Complete all fields below to continue",
+            "show": {
+              "startInputType": "formInput"
+            },
+            "id": "startAgentflow_0-input-formDescription-string",
+            "display": false
+          },
+          {
+            "label": "Form Input Types",
+            "name": "formInputTypes",
+            "description": "Specify the type of form input",
+            "type": "array",
+            "show": {
+              "startInputType": "formInput"
+            },
+            "array": [
+              {
+                "label": "Type",
+                "name": "type",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "String",
+                    "name": "string"
+                  },
+                  {
+                    "label": "Number",
+                    "name": "number"
+                  },
+                  {
+                    "label": "Boolean",
+                    "name": "boolean"
+                  },
+                  {
+                    "label": "Options",
+                    "name": "options"
+                  }
+                ],
+                "default": "string"
+              },
+              {
+                "label": "Label",
+                "name": "label",
+                "type": "string",
+                "placeholder": "Label for the input"
+              },
+              {
+                "label": "Variable Name",
+                "name": "name",
+                "type": "string",
+                "placeholder": "Variable name for the input (must be camel case)",
+                "description": "Variable name must be camel case. For example: firstName, lastName, etc."
+              },
+              {
+                "label": "Add Options",
+                "name": "addOptions",
+                "type": "array",
+                "show": {
+                  "formInputTypes[$index].type": "options"
+                },
+                "array": [
+                  {
+                    "label": "Option",
+                    "name": "option",
+                    "type": "string"
+                  }
+                ]
+              }
+            ],
+            "id": "startAgentflow_0-input-formInputTypes-array",
+            "display": false
+          },
+          {
+            "label": "Ephemeral Memory",
+            "name": "startEphemeralMemory",
+            "type": "boolean",
+            "description": "Start fresh for every execution without past chat history",
+            "optional": true,
+            "id": "startAgentflow_0-input-startEphemeralMemory-boolean",
+            "display": true
+          },
+          {
+            "label": "Flow State",
+            "name": "startState",
+            "description": "Runtime state during the execution of the workflow",
+            "type": "array",
+            "optional": true,
+            "array": [
+              {
+                "label": "Key",
+                "name": "key",
+                "type": "string",
+                "placeholder": "Foo"
+              },
+              {
+                "label": "Value",
+                "name": "value",
+                "type": "string",
+                "placeholder": "Bar",
+                "optional": true
+              }
+            ],
+            "id": "startAgentflow_0-input-startState-array",
+            "display": true
+          },
+          {
+            "label": "Persist State",
+            "name": "startPersistState",
+            "type": "boolean",
+            "description": "Persist the state in the same session",
+            "optional": true,
+            "id": "startAgentflow_0-input-startPersistState-boolean",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "startInputType": "chatInput",
+          "startState": [],
+          "startPersistState": false,
+          "startEphemeralMemory": true
+        },
+        "outputAnchors": [
+          {
+            "id": "startAgentflow_0-output-startAgentflow",
+            "label": "Start",
+            "name": "startAgentflow"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 103,
+      "height": 66,
+      "positionAbsolute": {
+        "x": 0,
+        "y": 60
+      },
+      "selected": false
+    },
+    {
+      "id": "customFunctionAgentflow_0",
+      "type": "agentFlow",
+      "data": {
+        "id": "customFunctionAgentflow_0",
+        "label": "Menú, privacidad y alcance",
+        "version": 1,
+        "name": "customFunctionAgentflow",
+        "type": "CustomFunction",
+        "color": "#E4B7FF",
+        "baseClasses": [
+          "CustomFunction"
+        ],
+        "category": "Agent Flows",
+        "description": "Consulta fichas de orientación técnica y ofrece canales oficiales.",
+        "inputParams": [
+          {
+            "name": "customFunctionInputVariables",
+            "label": "Input Variables",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "name": "variableName",
+                "label": "Variable Name",
+                "type": "string"
+              },
+              {
+                "name": "variableValue",
+                "label": "Variable Value",
+                "type": "string",
+                "acceptVariable": true
+              }
+            ],
+            "id": "customFunctionAgentflow_0-input-customFunctionInputVariables-array"
+          },
+          {
+            "name": "customFunctionJavascriptFunction",
+            "label": "Javascript Function",
+            "type": "code",
+            "id": "customFunctionAgentflow_0-input-customFunctionJavascriptFunction-code"
+          },
+          {
+            "name": "customFunctionUpdateState",
+            "label": "Update Flow State",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "name": "key",
+                "label": "Key",
+                "type": "asyncOptions",
+                "loadMethod": "listRuntimeStateKeys",
+                "freeSolo": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "string",
+                "acceptVariable": true,
+                "acceptNodeOutputAsVariable": true
+              }
+            ],
+            "id": "customFunctionAgentflow_0-input-customFunctionUpdateState-array"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "customFunctionInputVariables": [],
+          "customFunctionJavascriptFunction": "const normalize = (value) => String(value ?? '').normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n\nconst office = '[Oficina de Defensa del Litigante](https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/)';\nconst contact = 'Podés comunicarte con la ' + office + ' al (011) 4008-0216 / 0272 o por correo a odl@jusbaires.gob.ar.';\nconst navigation = '\\n\\nEscribí **menú** para ver las opciones.';\nconst areas = [\n  ['REG', 'Registro y acceso'], ['FD', 'Firma digital'], ['ESC', 'Escritos judiciales'],\n  ['CED', 'Cédulas y notificaciones'], ['CON', 'Consultas y servicios'], ['SOP', 'Soporte técnico']\n];\nconst examples = {\n  REG: ['Crear una cuenta', 'Validación de identidad', 'Recuperar el acceso'],\n  FD: ['Configurar firma digital remota', 'Firmar con token', 'Verificar la firma de un PDF'],\n  ESC: ['Inicio de una causa', 'Presentar un escrito y adjuntos', 'Primera presentación'],\n  CED: ['Cédula electrónica', 'Cédula a domicilio físico', 'Cédula observada'],\n  CON: ['Buscar una causa pública', 'Consultar la agenda judicial', 'Consultar zonas de notificación'],\n  SOP: ['Ventanas emergentes', 'Problemas al adjuntar un PDF', 'Causa que no figura en Mis Causas']\n};\nfunction route(message) {\n  const input = String(message ?? '');\n  if (input.length > 3000) {\n    return 'Resumí tu consulta sin incluir datos personales ni copiar el contenido de documentos judiciales.' + navigation;\n  }\n  const q = normalize(input);\n  if (/\\b(?:venc\\w* hoy|plazo (?:perentorio|judicial|vence)|in extremis|habilitacion urgente|alta urgente|caducidad|prescripcion)\\b/.test(q)) {\n    return 'Si hay un posible vencimiento judicial, contactá de inmediato a tu profesional o a la dependencia que interviene para confirmar cómo proceder. Para asistencia con el Portal, ' + contact + ' El chat no confirma plazos ni registra presentaciones.';\n  }\n  if (/[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}|\\b\\d{7,11}\\b|\\b\\d{2}-\\d{8}-\\d\\b/i.test(input) || /\\b(?:mi|el|la) (?:clave|otp|pin|contrasena|password|dni|cuit|cuil|codigo) (?:es|son)\\b/.test(q) || /\\b(?:mi )?(?:clave|otp|pin|contrase[nñ]a|password|dni|cuit|cuil)\\s*:/i.test(input)) {\n    return 'Para cuidar tu información, evitá compartir contraseñas, códigos o identificadores personales por este chat. Contame qué trámite querés hacer sin incluir esos datos.' + navigation;\n  }\n  if (/\\b(?:humano|operador|hablar con alguien|atencion personal|mi ticket|estado del ticket|abrir ticket|generar ticket)\\b/.test(q)) return contact + ' Este chat brinda orientación técnica.';\n  if (/\\b(?:me conviene|que estrategia|que recurso (?:debo|puedo)|calcul\\w+.*plazo|cuando vence|asesoramiento legal|que debo alegar)\\b/.test(q)) {\n    return 'Puedo orientarte en el uso del Portal. Para una decisión sobre tu caso o un plazo, consultá con tu profesional o con la dependencia que interviene.' + navigation;\n  }\n  if (/\\b(?:fuero nacional|fuero federal|lex100|scba|provincia de buenos aires|tribunal electoral|padron electoral)\\b/.test(q)) {\n    return 'Este chat orienta sobre el Portal del Litigante del Poder Judicial de la Ciudad de Buenos Aires. Para esa consulta, usá el canal del organismo que interviene.' + navigation;\n  }\n  if (!q || /^(?:hola|buen dia|buenas|menu|menu principal|inicio|volver|atras|ayuda)$/.test(q)) {\n    return '¡Hola! Soy el asistente de orientación para el Portal del Litigante. Elegí un número o contame tu consulta.\\n\\n' +\n      areas.map(([, name], index) => (index + 1) + '. ' + name).join('\\n');\n  }\n  const selected = q.match(/^(?:opcion )?([1-6])$/);\n  const area = selected ? areas[Number(selected[1]) - 1] : areas.find(([, name]) => normalize(name) === q);\n  if (area) {\n    return '**' + area[1] + '**\\n\\n¿Sobre qué tema necesitás orientación?\\n\\n' +\n      examples[area[0]].map((title) => '- ' + title).join('\\n') + navigation;\n  }\n  return 'BUSCARFICHA';\n}\n\nreturn route($flow.input);\n",
+          "customFunctionUpdateState": []
+        },
+        "outputAnchors": [
+          {
+            "id": "customFunctionAgentflow_0-output-customFunctionAgentflow",
+            "label": "Menú, privacidad y alcance",
+            "name": "customFunctionAgentflow"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "position": {
+        "x": 280,
+        "y": 60
+      },
+      "width": 251,
+      "height": 66,
+      "positionAbsolute": {
+        "x": 280,
+        "y": 60
+      },
+      "selected": false
+    },
+    {
+      "id": "conditionAgentflow_0",
+      "type": "agentFlow",
+      "position": {
+        "x": 580,
+        "y": 60
+      },
+      "data": {
+        "id": "conditionAgentflow_0",
+        "label": "¿Consultar fichas?",
+        "version": 1,
+        "name": "conditionAgentflow",
+        "type": "Condition",
+        "color": "#FFB938",
+        "baseClasses": [
+          "Condition"
+        ],
+        "category": "Agent Flows",
+        "description": "Split flows based on If Else conditions",
+        "inputParams": [
+          {
+            "label": "Conditions",
+            "name": "conditions",
+            "type": "array",
+            "description": "Values to compare",
+            "acceptVariable": true,
+            "default": [
+              {
+                "type": "string",
+                "value1": "",
+                "operation": "equal",
+                "value2": ""
+              }
+            ],
+            "array": [
+              {
+                "label": "Type",
+                "name": "type",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "String",
+                    "name": "string"
+                  },
+                  {
+                    "label": "Number",
+                    "name": "number"
+                  },
+                  {
+                    "label": "Boolean",
+                    "name": "boolean"
+                  }
+                ],
+                "default": "string"
+              },
+              {
+                "label": "Value 1",
+                "name": "value1",
+                "type": "string",
+                "default": "",
+                "description": "First value to be compared with",
+                "acceptVariable": true,
+                "show": {
+                  "conditions[$index].type": "string"
+                }
+              },
+              {
+                "label": "Operation",
+                "name": "operation",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "Contains",
+                    "name": "contains"
+                  },
+                  {
+                    "label": "Ends With",
+                    "name": "endsWith"
+                  },
+                  {
+                    "label": "Equal",
+                    "name": "equal"
+                  },
+                  {
+                    "label": "Not Contains",
+                    "name": "notContains"
+                  },
+                  {
+                    "label": "Not Equal",
+                    "name": "notEqual"
+                  },
+                  {
+                    "label": "Regex",
+                    "name": "regex"
+                  },
+                  {
+                    "label": "Starts With",
+                    "name": "startsWith"
+                  },
+                  {
+                    "label": "Is Empty",
+                    "name": "isEmpty"
+                  },
+                  {
+                    "label": "Not Empty",
+                    "name": "notEmpty"
+                  }
+                ],
+                "default": "equal",
+                "description": "Type of operation",
+                "show": {
+                  "conditions[$index].type": "string"
+                }
+              },
+              {
+                "label": "Value 2",
+                "name": "value2",
+                "type": "string",
+                "default": "",
+                "description": "Second value to be compared with",
+                "acceptVariable": true,
+                "show": {
+                  "conditions[$index].type": "string"
+                },
+                "hide": {
+                  "conditions[$index].operation": [
+                    "isEmpty",
+                    "notEmpty"
+                  ]
+                }
+              },
+              {
+                "label": "Value 1",
+                "name": "value1",
+                "type": "number",
+                "default": "",
+                "description": "First value to be compared with",
+                "acceptVariable": true,
+                "show": {
+                  "conditions[$index].type": "number"
+                }
+              },
+              {
+                "label": "Operation",
+                "name": "operation",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "Smaller",
+                    "name": "smaller"
+                  },
+                  {
+                    "label": "Smaller Equal",
+                    "name": "smallerEqual"
+                  },
+                  {
+                    "label": "Equal",
+                    "name": "equal"
+                  },
+                  {
+                    "label": "Not Equal",
+                    "name": "notEqual"
+                  },
+                  {
+                    "label": "Larger",
+                    "name": "larger"
+                  },
+                  {
+                    "label": "Larger Equal",
+                    "name": "largerEqual"
+                  },
+                  {
+                    "label": "Is Empty",
+                    "name": "isEmpty"
+                  },
+                  {
+                    "label": "Not Empty",
+                    "name": "notEmpty"
+                  }
+                ],
+                "default": "equal",
+                "description": "Type of operation",
+                "show": {
+                  "conditions[$index].type": "number"
+                }
+              },
+              {
+                "label": "Value 2",
+                "name": "value2",
+                "type": "number",
+                "default": 0,
+                "description": "Second value to be compared with",
+                "acceptVariable": true,
+                "show": {
+                  "conditions[$index].type": "number"
+                }
+              },
+              {
+                "label": "Value 1",
+                "name": "value1",
+                "type": "boolean",
+                "default": false,
+                "description": "First value to be compared with",
+                "show": {
+                  "conditions[$index].type": "boolean"
+                }
+              },
+              {
+                "label": "Operation",
+                "name": "operation",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "Equal",
+                    "name": "equal"
+                  },
+                  {
+                    "label": "Not Equal",
+                    "name": "notEqual"
+                  }
+                ],
+                "default": "equal",
+                "description": "Type of operation",
+                "show": {
+                  "conditions[$index].type": "boolean"
+                }
+              },
+              {
+                "label": "Value 2",
+                "name": "value2",
+                "type": "boolean",
+                "default": false,
+                "description": "Second value to be compared with",
+                "show": {
+                  "conditions[$index].type": "boolean"
+                }
+              }
+            ],
+            "id": "conditionAgentflow_0-input-conditions-array",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "conditions": [
+            {
+              "type": "string",
+              "value1": "{{ customFunctionAgentflow_0.output.content }}",
+              "operation": "equal",
+              "value2": "BUSCARFICHA"
+            }
+          ]
+        },
+        "outputAnchors": [
+          {
+            "label": "0",
+            "name": "0",
+            "description": "Consulta documental",
+            "id": "conditionAgentflow_0-output-0"
+          },
+          {
+            "label": "1",
+            "name": "1",
+            "description": "Respuesta directa",
+            "id": "conditionAgentflow_0-output-1"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 193,
+      "height": 80,
+      "positionAbsolute": {
+        "x": 580,
+        "y": 60
+      },
+      "selected": false
+    },
+    {
+      "id": "retrieverAgentflow_0",
+      "type": "agentFlow",
+      "position": {
+        "x": 900,
+        "y": 0
+      },
+      "data": {
+        "id": "retrieverAgentflow_0",
+        "label": "Buscar en la base del Portal",
+        "version": 1,
+        "name": "retrieverAgentflow",
+        "type": "Retriever",
+        "color": "#b8bedd",
+        "baseClasses": [
+          "Retriever"
+        ],
+        "category": "Agent Flows",
+        "description": "Retrieve information from vector database",
+        "inputParams": [
+          {
+            "label": "Knowledge (Document Stores)",
+            "name": "retrieverKnowledgeDocumentStores",
+            "type": "array",
+            "description": "Document stores to retrieve information from. Document stores must be upserted in advance.",
+            "array": [
+              {
+                "label": "Document Store",
+                "name": "documentStore",
+                "type": "asyncOptions",
+                "loadMethod": "listStores"
+              }
+            ],
+            "id": "retrieverAgentflow_0-input-retrieverKnowledgeDocumentStores-array",
+            "display": true
+          },
+          {
+            "label": "Retriever Query",
+            "name": "retrieverQuery",
+            "type": "string",
+            "placeholder": "Enter your query here",
+            "rows": 4,
+            "acceptVariable": true,
+            "id": "retrieverAgentflow_0-input-retrieverQuery-string",
+            "display": true
+          },
+          {
+            "label": "Output Format",
+            "name": "outputFormat",
+            "type": "options",
+            "options": [
+              {
+                "label": "Text",
+                "name": "text"
+              },
+              {
+                "label": "Text with Metadata",
+                "name": "textWithMetadata"
+              }
+            ],
+            "default": "text",
+            "id": "retrieverAgentflow_0-input-outputFormat-options",
+            "display": true
+          },
+          {
+            "label": "Update Flow State",
+            "name": "retrieverUpdateState",
+            "description": "Update runtime state during the execution of the workflow",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "label": "Key",
+                "name": "key",
+                "type": "asyncOptions",
+                "loadMethod": "listRuntimeStateKeys",
+                "freeSolo": true
+              },
+              {
+                "label": "Value",
+                "name": "value",
+                "type": "string",
+                "acceptVariable": true,
+                "acceptNodeOutputAsVariable": true
+              }
+            ],
+            "id": "retrieverAgentflow_0-input-retrieverUpdateState-array",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "retrieverKnowledgeDocumentStores": [],
+          "retrieverQuery": "{{ question }}",
+          "outputFormat": "textWithMetadata",
+          "retrieverUpdateState": []
+        },
+        "outputAnchors": [
+          {
+            "name": "retrieverAgentflow",
+            "label": "Buscar en la base del Portal",
+            "id": "retrieverAgentflow_0-output-retrieverAgentflow"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 252,
+      "height": 66,
+      "positionAbsolute": {
+        "x": 900,
+        "y": 0
+      },
+      "selected": false
+    },
+    {
+      "id": "directReplyAgentflow_0",
+      "type": "agentFlow",
+      "position": {
+        "x": 900,
+        "y": 190
+      },
+      "data": {
+        "id": "directReplyAgentflow_0",
+        "label": "Responder sin búsqueda",
+        "version": 1,
+        "name": "directReplyAgentflow",
+        "type": "DirectReply",
+        "color": "#4DDBBB",
+        "hideOutput": true,
+        "baseClasses": [
+          "DirectReply"
+        ],
+        "category": "Agent Flows",
+        "description": "Directly reply to the user with a message",
+        "inputParams": [
+          {
+            "label": "Message",
+            "name": "directReplyMessage",
+            "type": "string",
+            "rows": 4,
+            "acceptVariable": true,
+            "id": "directReplyAgentflow_0-input-directReplyMessage-string",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "directReplyMessage": "{{ customFunctionAgentflow_0.output.content }}"
+        },
+        "outputAnchors": [],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 233,
+      "height": 66,
+      "positionAbsolute": {
+        "x": 900,
+        "y": 190
+      },
+      "selected": false
+    },
+    {
+      "id": "customFunctionAgentflow_1",
+      "type": "agentFlow",
+      "data": {
+        "id": "customFunctionAgentflow_1",
+        "label": "Responder con ficha y fuente oficial",
+        "version": 1,
+        "name": "customFunctionAgentflow",
+        "type": "CustomFunction",
+        "color": "#E4B7FF",
+        "baseClasses": [
+          "CustomFunction"
+        ],
+        "category": "Agent Flows",
+        "description": "Consulta fichas de orientación técnica y ofrece canales oficiales.",
+        "inputParams": [
+          {
+            "name": "customFunctionInputVariables",
+            "label": "Input Variables",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "name": "variableName",
+                "label": "Variable Name",
+                "type": "string"
+              },
+              {
+                "name": "variableValue",
+                "label": "Variable Value",
+                "type": "string",
+                "acceptVariable": true
+              }
+            ],
+            "id": "customFunctionAgentflow_1-input-customFunctionInputVariables-array"
+          },
+          {
+            "name": "customFunctionJavascriptFunction",
+            "label": "Javascript Function",
+            "type": "code",
+            "id": "customFunctionAgentflow_1-input-customFunctionJavascriptFunction-code"
+          },
+          {
+            "name": "customFunctionUpdateState",
+            "label": "Update Flow State",
+            "type": "array",
+            "optional": true,
+            "acceptVariable": true,
+            "array": [
+              {
+                "name": "key",
+                "label": "Key",
+                "type": "asyncOptions",
+                "loadMethod": "listRuntimeStateKeys",
+                "freeSolo": true
+              },
+              {
+                "name": "value",
+                "label": "Value",
+                "type": "string",
+                "acceptVariable": true,
+                "acceptNodeOutputAsVariable": true
+              }
+            ],
+            "id": "customFunctionAgentflow_1-input-customFunctionUpdateState-array"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "customFunctionInputVariables": [
+            {
+              "variableName": "retrieved",
+              "variableValue": "{{ retrieverAgentflow_0.output.content }}"
+            }
+          ],
+          "customFunctionJavascriptFunction": "const normalize = (value) => String(value ?? '').normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n\nconst sourceLabels = new Map([\n  ['https://eje.juscaba.gob.ar/iol-ui/p/inicio', 'Portal del Litigante'],\n  ['https://eje.juscaba.gob.ar/iol-ui/', 'Consulta Pública de EJE'],\n  ['https://firmar.gob.ar/firmador/', 'Firma Digital Remota'],\n  ['https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/', 'Oficina de Defensa del Litigante']\n]);\nconst navigation = '\\n\\nEscribí **menú** para ver las opciones.';\nconst fallback = 'No encontré una ficha suficientemente relacionada. Contame qué querés hacer en el Portal o en qué paso te trabaste. Para asistencia técnica, podés consultar a la [Oficina de Defensa del Litigante](https://consejo.jusbaires.gob.ar/institucional/organigrama/oficina-de-defensa-del-litigante/).' + navigation;\n\nfunction respond(question, retrieved) {\n  let documents;\n  try {\n    documents = Array.isArray(retrieved) ? retrieved : JSON.parse(retrieved);\n  } catch {\n    return fallback;\n  }\n  if (!Array.isArray(documents)) return fallback;\n  const query = normalize(question);\n  const queryWords = ' ' + query + ' ';\n  const matches = [];\n  for (const {pageContent} of documents) {\n    const ficha = String(pageContent ?? '').match(\n      /^# ([^\\n]+)\\s+Ficha (VEC-PL-[A-Z]+-\\d+)\\s+Consultas relacionadas: ([^\\n]+)\\s+Respuesta:\\s+([\\s\\S]+?)\\s+Fuente oficial: (https:\\/\\/[^\\s]+)\\s*$/\n    );\n    if (!ficha) continue;\n    const [, title, id, triggers, answer, source] = ficha;\n    if (!sourceLabels.has(source)) continue;\n    const phrases = [title, ...triggers.split(',')].map(normalize).filter(Boolean);\n    const score = normalize(title) === query ? Number.MAX_SAFE_INTEGER :\n      Math.max(0, ...phrases.filter(phrase => queryWords.includes(' ' + phrase + ' ')).map(phrase => phrase.split(' ').length));\n    if (score > 0) matches.push({title, id, answer, source, score});\n  }\n  matches.sort((a, b) => b.score - a.score);\n  const [first, second] = matches;\n  if (!first) return fallback;\n  if (second && first.id !== second.id && first.score === second.score) {\n    return '¿Te referís a **' + first.title + '** o a **' + second.title + '**?' + navigation;\n  }\n  return '**' + first.title + '**\\n\\n' + first.answer + '\\n\\n[' + sourceLabels.get(first.source) + '](' + first.source + ')' + navigation;\n}\n\nreturn respond($flow.input, $retrieved);\n",
+          "customFunctionUpdateState": []
+        },
+        "outputAnchors": [
+          {
+            "id": "customFunctionAgentflow_1-output-customFunctionAgentflow",
+            "label": "Responder con ficha y fuente oficial",
+            "name": "customFunctionAgentflow"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "position": {
+        "x": 1220,
+        "y": 0
+      },
+      "width": 306,
+      "height": 66,
+      "positionAbsolute": {
+        "x": 1220,
+        "y": 0
+      },
+      "selected": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "startAgentflow_0",
+      "target": "customFunctionAgentflow_0",
+      "sourceHandle": "startAgentflow_0-output-startAgentflow",
+      "targetHandle": "customFunctionAgentflow_0",
+      "type": "agentFlow",
+      "id": "startAgentflow_0-startAgentflow_0-output-startAgentflow-customFunctionAgentflow_0-customFunctionAgentflow_0",
+      "data": {
+        "sourceColor": "#7EE787",
+        "targetColor": "#E4B7FF",
+        "isHumanInput": false
+      }
+    },
+    {
+      "source": "customFunctionAgentflow_0",
+      "target": "conditionAgentflow_0",
+      "sourceHandle": "customFunctionAgentflow_0-output-customFunctionAgentflow",
+      "targetHandle": "conditionAgentflow_0",
+      "type": "agentFlow",
+      "id": "customFunctionAgentflow_0-customFunctionAgentflow_0-output-customFunctionAgentflow-conditionAgentflow_0-conditionAgentflow_0",
+      "data": {
+        "sourceColor": "#E4B7FF",
+        "targetColor": "#FFB938",
+        "isHumanInput": false
+      }
+    },
+    {
+      "source": "conditionAgentflow_0",
+      "target": "retrieverAgentflow_0",
+      "sourceHandle": "conditionAgentflow_0-output-0",
+      "targetHandle": "retrieverAgentflow_0",
+      "type": "agentFlow",
+      "id": "conditionAgentflow_0-conditionAgentflow_0-output-0-retrieverAgentflow_0-retrieverAgentflow_0",
+      "data": {
+        "sourceColor": "#FFB938",
+        "targetColor": "#b8bedd",
+        "isHumanInput": false
+      }
+    },
+    {
+      "source": "conditionAgentflow_0",
+      "target": "directReplyAgentflow_0",
+      "sourceHandle": "conditionAgentflow_0-output-1",
+      "targetHandle": "directReplyAgentflow_0",
+      "type": "agentFlow",
+      "id": "conditionAgentflow_0-conditionAgentflow_0-output-1-directReplyAgentflow_0-directReplyAgentflow_0",
+      "data": {
+        "sourceColor": "#FFB938",
+        "targetColor": "#4DDBBB",
+        "isHumanInput": false
+      }
+    },
+    {
+      "source": "retrieverAgentflow_0",
+      "target": "customFunctionAgentflow_1",
+      "sourceHandle": "retrieverAgentflow_0-output-retrieverAgentflow",
+      "targetHandle": "customFunctionAgentflow_1",
+      "type": "agentFlow",
+      "id": "retrieverAgentflow_0-retrieverAgentflow_0-output-retrieverAgentflow-customFunctionAgentflow_1-customFunctionAgentflow_1",
+      "data": {
+        "sourceColor": "#b8bedd",
+        "targetColor": "#E4B7FF",
+        "isHumanInput": false
+      }
+    }
+  ]
+}
